@@ -24,7 +24,21 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li><a ng-href="#/">Home</a></li>
+          <li><a ng-href="#/issues">Issues</a></li>
+          <li><a ng-href="#/users">Users</a></li>
+        </ul>
+        <h3 class="text-muted">tasks</h3>
+      </div>
+      <!-- View content will be loaded here -->
+      <div ng-view></div>
+      <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+      </div>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -51,12 +65,15 @@
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/services/issues.js"></script>
+        <script src="scripts/controllers/issues.js"></script>
         <!-- endbuild -->
 </body>
 </html>
