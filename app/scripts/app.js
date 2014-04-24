@@ -52,7 +52,6 @@ angular
         'itemsCount': 1110
       }
     };
-    $httpBackend.whenGET('/issues').respond(issues);
     $httpBackend.whenGET(/issues\/[0-9]+/).respond(function (method, url) {
       var re1='.*?',  // Non-greedy match on filler
         re2='(\\d+)', // Integer Number 1
@@ -72,5 +71,6 @@ angular
       }
       return [200, response, {}];
     });
+    $httpBackend.when('GET', '/issues').respond(issues);
     $httpBackend.whenGET(/.*/).passThrough();
   });
