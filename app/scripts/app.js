@@ -18,6 +18,10 @@ angular
         templateUrl: 'views/issues.html',
         controller: 'IssuesCtrl'
       })
+      .when('/users', {
+        templateUrl: 'views/users.html',
+        controller: 'UsersCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -53,22 +57,14 @@ angular
       }
     };
     $httpBackend.whenGET(/issues\/[0-9]+/).respond(function (method, url) {
-      var re1='.*?',  // Non-greedy match on filler
-        re2='(\\d+)', // Integer Number 1
-        response,
-        p,
-        m;
-
-      p = new RegExp(re1+re2,['i']);
-      m = p.exec(url);
-      if (m !== null)
-      {
-        issues.data.forEach(function (issue) {
-          if (issue.id === parseInt(m[1])) {
-            response = issue;
-          }
-        });
-      }
+      var urlSegments = url.split('/'),
+        m = parseInt(urlSegments[2]),
+        response;
+      issues.data.forEach(function (issue) {
+        if (issue.id === m) {
+          response = issue;
+        }
+      });
       return [200, response, {}];
     });
     $httpBackend.when('GET', '/issues').respond(issues);
