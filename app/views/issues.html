@@ -1,2 +1,24 @@
-<pre>{{issues | json}}</pre>
-<pre>{{issue | json}}</pre>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Assignee</th>
+            <th>Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="issue in issues.data">
+            <td ng-bind="issue.id"></td>
+            <td>
+                <a ng-href="#/issues/{{issue.id}}" ng-bind="issue.title"></a>
+            </td>
+            <td ng-bind="issue.status"></td>
+            <td>
+                <a ng-href="#/users/{{issue.assignee.id}}" ng-bind="issue.assignee.name"></a>
+            </td>
+            <td ng-bind="issue.updated_at"></td>
+        </tr>
+    </tbody>
+</table>

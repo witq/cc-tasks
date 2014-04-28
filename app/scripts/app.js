@@ -14,9 +14,17 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/issues/:Id', {
+        templateUrl: 'views/issue.html',
+        controller: 'IssueCtrl'
+      })
       .when('/issues', {
         templateUrl: 'views/issues.html',
         controller: 'IssuesCtrl'
+      })
+      .when('/users/:Id', {
+        templateUrl: 'views/user.html',
+        controller: 'UserCtrl'
       })
       .when('/users', {
         templateUrl: 'views/users.html',
@@ -36,9 +44,12 @@ angular
           'status': 'In Progress',
           'type': 'Task',
           'priority': 'major',
-          'assignee': 'Arek Zając',
-          'updated_at': '2013-09-12T06:20:31+0000',
-          'created_at': '2013-09-12T06:20:31+0000'
+          'assignee': {
+            name: 'Arek Zając',
+            id: 'azajac'
+          },
+          'updatedAt': '2013-09-12T06:20:31+0000',
+          'createdAt': '2013-09-12T06:20:31+0000'
         },
         {
           'id': 2,
@@ -47,9 +58,12 @@ angular
           'status': 'In Progress',
           'type': 'Task',
           'priority': 'major',
-          'assignee': 'Witek Galecki',
-          'updated_at': '2013-09-12T06:20:31+0000',
-          'created_at': '2013-09-12T06:20:31+0000'
+          'assignee': {
+            name: 'Witek Galecki',
+            id: 'wgalecki'
+          },
+          'updatedAt': '2013-09-12T06:20:31+0000',
+          'createdAt': '2013-09-12T06:20:31+0000'
         }
       ],
       'paging': {
@@ -68,5 +82,17 @@ angular
       return [200, response, {}];
     });
     $httpBackend.when('GET', '/issues').respond(issues);
+    $httpBackend.when('PUT', /issues\/[0-9]+/).respond(function (method, url, data) {
+      var urlSegments = url.split('/'),
+        match = parseInt(urlSegments[2]),
+        index;
+      issues.data.forEach(function (issue) {
+        if (issue.id === match) {
+          index = issues.data.indexOf(issue);
+        }
+      });
+      issues.data[index] = angular.fromJson(data);
+      return [200, {}, data];
+    });
     $httpBackend.whenGET(/.*/).passThrough();
   });
